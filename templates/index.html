@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+		<meta charset="UTF-8">
+		<title>Food</title>
+
+		{% load staticfiles %}
+
+		<!--Style sheets-->
+		<link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.css" %}"/>
+		<link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap-theme.css" %}" />
+		<link rel="stylesheet" href="{% static "main.css" %}"/>
+		<link rel="stylesheet" href="http://ui-grid.info/release/ui-grid-unstable.css"/>
+
+		<!--Libraries-->
+		<script src="{% static "angular/angular.js" %}"></script>
+		<script src="{% static "d3/d3.min.js" %}"></script>
+		<script src="{% static "angular-ui-bootstrap/ui-bootstrap-tpls-0.12.0.js" %}" ></script>
+		<script src="{% static "ui-grid.js" %}"></script>
+		<script src="{% static "angular-route/angular-route.min.js" %}"></script>
+
+
+		<!--Services-->
+		<script src="{% static "common/DeploydService.js" %}"></script>
+		<script src="{% static "diet/services/DietDataService.js" %}"></script>
+		<script src="{% static "diet/services/UserDataService.js" %}"></script>
+		<script src="{% static "food%20data/services/FoodDataService.js" %}"></script>
+		<script src="{% static "diet/services/UserAndDietService.js" %}"></script>
+		<script src="{% static "food%20log/services/FoodLogDataService.js" %}"></script>
+
+		<!--Controllers-->
+		<script src="{% static "app.js" %}"></script>
+		<script src="{% static "common/MainCtrl.js"  %}"></script>
+		<script src="{% static "diet/controllers/DietCtrl.js" %}"></script>
+		<script src="{% static "common/AppConstant.js" %}"></script>
+		<script src="{% static "food%20log/controllers/FoodLogCtrl.js" %}"></script>
+		<script src="{% static "food%20data/controllers/FoodCtrl.js" %}"></script>
+		<script src="{% static "calendar/controllers/CalendarCtrl.js" %}"></script>
+
+
+		<!--Directives-->
+
+		<script src="../diet/directives/riCircleChart.js"></script>
+		<script src="../food%20log/directives/riTargetBarChart.js"></script>
+
+
+		<style>
+				.myGrid {
+						width: 800px;
+						height: 250px;
+				}
+		</style>
+
+</head>
+<body ng-app="myApp">
+
+<div class="navbar navbar-inverse navbar-fixed-top"
+     role="navigation">
+
+		<div class="container">
+				<div class="navbar-header">
+						<span class="navbar-brand">Food</span>
+				</div>
+		</div>
+</div>
+
+
+<div class="container-fluid">
+		<div class="row">
+				<div class="col-xs-4 col-sm-4 col-md-3 sidebar">
+
+						<accordion close-others="false">
+								<accordion-group ng-init="project.open = true" is-open="project.open">
+										<accordion-heading>
+												User Profile
+												<i class="pull-right glyphicon"
+												   ng-class="{'glyphicon-chevron-down': project.open, 'glyphicon-chevron-right': !project.open}"></i>
+										</accordion-heading>
+										<div class="media">
+
+
+												<div><img
+																src="https://d13yacurqjgara.cloudfront.net/users/5098/screenshots/147389/monkey-logo.jpg"
+																class="img-thumbnail"
+																>
+												</div>
+												<div class="text-muted"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut corporis
+														dicta dolor enim
+														eos error harum nemo nesciunt nulla officia omnis perferendis provident quibusdam sint,
+														vero. Laborum ratione ullam voluptatem.
+
+												</div>
+
+
+										</div>
+								</accordion-group>
+
+								<accordion-group ng-init="recent.open = true" is-open="recent.open">
+										<accordion-heading>
+												Calendarö
+												<i class="pull-right glyphicon"
+												   ng-class="{'glyphicon-chevron-down': recent.open, 'glyphicon-chevron-right': !recent.open}"></i>
+										</accordion-heading>
+
+										<div ng-controller="CalendarCtrl as calendarCtrl" style="display:inline-block; min-height:290px;">
+
+
+												<datepicker ng-model="calendarCtrl.dt" show-weeks="true"></datepicker>
+
+
+										</div>
+
+
+								</accordion-group>
+						</accordion>
+
+
+				</div>
+
+
+				<div class="col-xs-8 col-xs-offset-4 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+
+						<tabset>
+
+
+								<tab heading="User Info" ng-controller="DietCtrl as dietCtrl">
+
+
+										<div class="row" ng-switch="dietCtrl.editTable.userInformation">
+
+												<div class="col-xs-8">
+														<legend>User Control Panel</legend>
+														<div class="panel panel-default">
+																<div class="panel-heading">
+																		<span class="glyphicon glyphicon-user"></span>
+																		<b>User Information</b>
+
+																		<span ng-switch-when="false" class="glyphicon glyphicon-pencil pull-right pointer"
+																		      ng-click="dietCtrl.editTable.editUI()"></span>
+										<span ng-switch-when="true" class="glyphicon glyphicon-pencil pull-right green pointer"
+										      ng-click="dietCtrl.editTable.postUI()">
+
+
+																		</span>
+
+
+																</div>
+
+
+																<div>
+																		<table class="table" ng-switch-when="false">
+
+
+																				<tr>
+																						<td width="50%" class="text-left">Name:
+																						</td>
+
+
+																						<td width="50%" class="text-left" ng-bind="dietCtrl.userData.name"></td>
+																				</tr>
+
+
+																				<tr>
+																						<td class="text-left">Weight:
+																						<td class="text-left" ng-bind="dietCtrl.userData.weight + ' kg'">
+																						</td>
+
+																				</tr>
+																				<tr>
+																						<td class="text-left">Body fat:
+																						</td>
+																						<td class="text-left" ng-bind="dietCtrl.userData.bodyFat +' %'"></td>
+																				</tr>
+																				<tr style="background: rgba(58, 70, 79, 0.05)">
+																						<td class="text-left">Lean body mass:
+																						</td>
+																						<td class="text-left" ng-bind="(dietCtrl.leanBM | number: 2) + ' kg'"></td>
+																				</tr>
+																		</table>
+
+
+																		<table class="table" ng-switch-when="true">
+
+
+																				<tr>
+																						<td width="50%" class="text-left">Name:
+																						</td>
+																						<td class="text-left">
+
+																								<input type="text" ng-model="dietCtrl.userData.name"/>
+
+																						</td>
+																				</tr>
+
+
+																				<tr>
+																						<td class="text-left">Weight:
+																						<td class="text-left">
+
+																								<input type="text" ng-model="dietCtrl.userData.weight"/>
+
+																						</td>
+
+																				</tr>
+																				<tr>
+																						<td class="text-left">Body fat:
+																						</td>
+																						<td class="text-left">
+																								<input type="text" ng-model="dietCtrl.userData.bodyFat"/>
+																						</td>
+																				</tr>
+																				<tr style="background: rgba(58, 70, 79, 0.05)">
+																						<td class="text-left">Lean body mass:
+																						</td>
+																						<td class="text-left" ng-bind="(dietCtrl.leanBM | number: 2) + ' kg'"></td>
+																				</tr>
+
+
+																		</table>
+
+
+																</div>
+														</div>
+												</div>
+
+
+										</div>
+
+
+										<div class="row" ng-switch="dietCtrl.editTable.dietFactors">
+												<div class="col-xs-8">
+
+
+														<div class="panel panel-default">
+																<div class="panel-heading">
+																		<span class="glyphicon glyphicon-cog"></span>
+																		<b>Factor</b><span ng-switch-when="false"
+																		                   class="glyphicon glyphicon-pencil pull-right pointer"
+																		                   ng-click="dietCtrl.editTable.editDietFactors()"></span>
+																				<span ng-switch-when="true"
+																				      class="glyphicon glyphicon-pencil pull-right green pointer"
+																				      ng-click="dietCtrl.editTable.postDietFactors()"></span></div>
+
+
+																<table class="table" ng-switch-when="false">
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">RBM:</span>
+																				</td>
+																				<td class="col-sm-6" ng-bind="dietCtrl.dietFactors.RBM + ' kcal'">
+
+																				</td>
+																		</tr>
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">Protein factor:</span>
+																				</td>
+																				<td class="col-sm-6" ng-bind="dietCtrl.dietFactors.proteinFactor">
+																				</td>
+																		</tr>
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">Fat factor:</span>
+																				</td>
+																				<td class="col-sm-6" ng-bind="dietCtrl.dietFactors.fatFactor">
+
+																				</td>
+																		</tr>
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">Activity factor:</span>
+																				</td>
+																				<td class="col-sm-6" ng-bind="dietCtrl.dietFactors.activityFactor">
+
+																				</td>
+
+
+																		</tr>
+
+																		<tr>
+																				<td class="col-sm-6"><span class="text-left">Cut factor:</span>
+																				</td>
+
+																				<td class="col-sm-6" ng-bind="dietCtrl.dietFactors.cutFactor">
+
+																				</td>
+
+
+																		</tr>
+																</table>
+
+
+																<table class="table" ng-switch-when="true">
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">RBM:</span>
+																				</td>
+																				<td class="col-sm-6">
+
+																						<input type="text" ng-model="dietCtrl.dietFactors.RBM"/>
+
+
+																				</td>
+																		</tr>
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">Protein factor:</span>
+																				</td>
+																				<td class="col-sm-6">
+
+																						<input type="text" ng-model="dietCtrl.dietFactors.proteinFactor"/>
+																				</td>
+																		</tr>
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">Fat factor:</span>
+																				</td>
+																				<td class="col-sm-6">
+
+																						<input type="text" ng-model="dietCtrl.dietFactors.fatFactor"/>
+
+																				</td>
+																		</tr>
+																		<tr>
+
+																				<td class="col-sm-6"><span class="text-left">Activity factor:</span>
+																				</td>
+																				<td class="col-sm-6">
+
+																						<input type="text" ng-model="dietCtrl.dietFactors.activityFactor"/>
+
+																				</td>
+
+
+																		</tr>
+
+																		<tr>
+																				<td class="col-sm-6"><span class="text-left">Cut factor:</span>
+																				</td>
+
+																				<td class="col-sm-6">
+
+																						<input type="text" ng-model="dietCtrl.dietFactors.cutFactor"/>
+
+																				</td>
+
+
+																		</tr>
+																</table>
+
+
+														</div>
+												</div>
+
+
+												<div class="col-xs-4">
+
+
+												</div>
+
+
+										</div>
+
+										<div class="row">
+
+												<div class="col-xs-6">
+														<h4><b>Macro demand</b></h4>
+
+														<table class="table">
+																<thead>
+																<tr>
+																		<td></td>
+																		<td>grams</td>
+																		<td>calories</td>
+																</tr>
+																</thead>
+																<tbody>
+																<tr>
+																		<td class="green">Protein</td>
+																		<td ng-bind="dietCtrl.proteinGram | number:0"></td>
+																		<td ng-bind="dietCtrl.proteinCalories | number:0"></td>
+																</tr>
+																<tr>
+																		<td class="blue">Fat</td>
+																		<td ng-bind="dietCtrl.fatGram | number:0"></td>
+																		<td ng-bind="dietCtrl.fatCalories | number:0"></td>
+																</tr>
+																<tr>
+																		<td class="red">Carbs</td>
+																		<td ng-bind="dietCtrl.carbGram | number:0"></td>
+																		<td ng-bind="dietCtrl.carbCalories | number:0"></td>
+																</tr>
+																</tbody>
+																<tfoot>
+																<tr>
+																		<td><b>Total</b></td>
+																		<td></td>
+																		<td><b ng-bind="dietCtrl.total | number:0"></b></td>
+																</tr>
+																</tfoot>
+														</table>
+												</div>
+
+
+												<div class="col-xs-6">
+
+														<ri-circle-chart chart-data="dietCtrl.circle"></ri-circle-chart>
+
+												</div>
+										</div>
+
+								</tab>
+
+
+								<tab heading="Food Log" ng-controller="FoodLogCtrl as foodLogCtrl">
+
+										<div class="row">
+												<div class="col-xs-8">
+
+
+														<div class='container-fluid'>
+
+																<legend>Add to Foodlog</legend>
+
+
+																<div class="panel panel-default">
+																		<div class="panel-heading">
+																				<span class="glyphicon glyphicon-adjust"></span>
+																				<b>Add Food</b>
+
+																				<div><input type="text" ng-model="foodLogCtrl.asyncSelected"
+																				            placeholder="Locations loaded via $http"
+
+																				            typeahead="food as food.name for food in foodLogCtrl.food| filter:$viewValue"
+																				            typeahead-loading="loadingLocations"
+																				            class="form-control">
+
+
+																						<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i></div>
+
+
+																		</div>
+
+
+																		<table class="table table-bordered  alert-info">
+																				<tr>
+
+																						<td class="col-sm-6"><span class="text-left">Name:</span>
+																						</td>
+																						<td class="col-sm-6">
+
+																								<input type="text"
+																								       ng-model="foodLogCtrl.asyncSelected.name"/>
+
+																						</td>
+																				</tr>
+																				<tr>
+
+																						<td class="col-sm-6"><span class="text-left">Quantity</span>
+																						</td>
+																						<td class="col-sm-6">
+
+																								<input type="text" ng-model="foodLogCtrl.asyncSelected.quantity"/>
+																						</td>
+																				</tr>
+																				<tr>
+
+																						<td class="col-sm-6"><span class="text-left">Protein (gr)</span>
+																						</td>
+																						<td>
+
+																								<input type="text" ng-model="foodLogCtrl.asyncSelected.protein"/>
+
+
+																						</td>
+																				</tr>
+																				<tr>
+
+																						<td class="col-sm-6"><span class="text-left">Fat (gr)</span>
+																						</td>
+																						<td>
+
+																								<input type="text" ng-model="foodLogCtrl.asyncSelected.fat"/>
+
+
+																						</td>
+
+
+																				</tr>
+
+																				<tr>
+																						<td class="col-sm-6"><span class="text-left">Carbs (gr)</span>
+																						</td>
+																						<td>
+
+																								<input type="text" ng-model="foodLogCtrl.asyncSelected.carbs"/>
+
+																						</td>
+
+
+																				</tr>
+
+																				<tr>
+																						<td class="col-sm-6"><span class="text-left"><b>Total Calories
+																								(kcal)</b></span>
+																						</td>
+
+																						<td class="col-sm-6" ng-bind="foodLogCtrl.asyncSelected.total">
+
+																						</td>
+
+
+																				</tr>
+																		</table>
+
+
+																</div>
+
+																<button class="btn btn-default pull-right" ng-click="foodLogCtrl.postFood()">Add food
+																</button>
+
+
+														</div>
+												</div>
+
+
+												<div class="col-xs-4">
+														<div class='container-fluid'>
+
+																<legend>Marco Target</legend>
+
+
+																<ri-target-bar-chart chart-data="foodLogCtrl.macroBar"
+																                     chart-target="foodLogCtrl.totalMacro"></ri-target-bar-chart>
+																<ri-target-bar-chart chart-data="foodLogCtrl.proteinBar"
+																                     chart-target="foodLogCtrl.proteinGram"></ri-target-bar-chart>
+																<ri-target-bar-chart chart-data="foodLogCtrl.fatBar"
+																                     chart-target="foodLogCtrl.fatGram"></ri-target-bar-chart>
+
+
+														</div>
+												</div>
+										</div>
+
+
+										<div class="row">
+												<div class="col-xs-12">
+														<div class='container-fluid panel-body'>
+
+																<table class="table log">
+																		<thead class="log">
+																		<tr>
+																				<th>Name</th>
+																				<th>Quantity</th>
+																				<th>Protein (gr)</th>
+																				<th>Fat (gr)</th>
+																				<th>Carbs (gr)</th>
+																				<th>Calories (kcal)</th>
+																				<th>Edit/Remove</th>
+																		</tr>
+																		</thead>
+																		<tbody>
+																		<tr ng-repeat="food in foodLogCtrl.foodLog">
+																				<td ng-bind="food.name"></td>
+																				<td ng-bind="food.quantity"></td>
+																				<td ng-bind="food.quantityProtein"></td>
+																				<td ng-bind="food.quantityFat"></td>
+																				<td ng-bind="food.quantityCarbs"></td>
+																				<td ng-bind="food.totalCalories"></td>
+																				<td>
+																						<span class="glyphicon glyphicon-minus pointer"
+																						      ng-click="foodLogCtrl.removeFood(food.id)"></span>
+																				</td>
+
+																		</tr>
+																		</tbody>
+																		<tfoot>
+																		<tr style="font-size: larger; font-weight: bold">
+																				<td>Total</td>
+																				<td></td>
+																				<td ng-bind="foodLogCtrl.sumProtein"></td>
+																				<td ng-bind="foodLogCtrl.sumFat"></td>
+																				<td ng-bind="foodLogCtrl.sumCarbs"></td>
+																				<td ng-bind="foodLogCtrl.sum"></td>
+																				<td></td>
+																		</tr>
+																		</tfoot>
+																</table>
+
+
+														</div>
+												</div>
+										</div>
+
+
+								</tab>
+								<tab heading="Food Data" ng-controller="FoodCtrl as foodCtrl">
+
+
+										<div class="row">
+
+												<div class="col-xs-6">
+														<legend>Add Food</legend>
+
+														<div class='container-fluid'>
+
+																<form class="form-horizontal">
+
+																		<div class="form-group">
+																				<label>Name</label>
+																				<input type="text" class="form-control" ng-model="foodCtrl.name">
+																		</div>
+
+																		<div class="form-group">
+																				<label>Protein (gr)</label>
+																				<input type="text" class="form-control" ng-model="foodCtrl.protein">
+																		</div>
+
+																		<div class="form-group">
+																				<label>Fat (gr)</label>
+																				<input type="text" class="form-control" ng-model="foodCtrl.fat">
+																		</div>
+
+																		<div class="form-group">
+																				<label>Carbs (gr)</label>
+																				<input type="text" class="form-control" ng-model="foodCtrl.carbs">
+																		</div>
+
+																		<button type="submit" class="btn btn-default"
+																		        ng-click="foodCtrl.addFood()">
+																				Add Food
+																		</button>
+																</form>
+														</div>
+
+
+												</div>
+
+												<div class="col-xs-6">
+														<legend>Photo</legend>
+
+
+														Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto beatae
+														consectetur consequatur culpa, cum debitis deleniti deserunt dignissimos dolore dolorum
+														earum ex expedita facere facilis ipsam non obcaecati officiis perferendis possimus
+														praesentium provident quasi quibusdam repudiandae sequi sunt suscipit tenetur veritatis
+														vero! Asperiores dolorem excepturi expedita hic optio quia rem rerum, sunt veritatis
+														voluptate. Asperiores eaque est impedit ipsum modi molestiae omnis, possimus praesentium
+														tempora! Atque commodi, dolore doloribus fugit magni nisi, officiis qui quisquam repudiandae
+														suscipit voluptatibus.
+
+												</div>
+
+										</div>
+
+										<br/>
+
+										<div class="row">
+
+												<div class="col-xs-8">
+														<div ui-grid="foodCtrl.gridOptions" class="myGrid"></div>
+
+
+												</div>
+
+										</div>
+
+
+								</tab>
+
+								<tab heading="Recipes">There are no recipes yets</tab>
+						</tabset>
+
+
+				</div>
+		</div>
+</div>
+
+
+<script>
+
+</script>
+
+</body>
+</html>
