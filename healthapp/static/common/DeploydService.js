@@ -15,7 +15,7 @@ angular.module('myApp')
 				};
 
 				var query = function (collection) {
-						var uri = baseUrl + '/' + collection ;
+						var uri = baseUrl + '/' + collection + '/';
 						return $http({
 								method: 'GET',
 								url: uri

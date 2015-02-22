@@ -1,5 +1,5 @@
 angular.module('myApp')
-	.controller('SnippetCtrl',['snippetService', function() {
+		.controller('SnippetCtrl', ['snippetService', function () {
 
 				var self = this;
 
@@ -9,27 +9,17 @@ angular.module('myApp')
 
 
 						snippetService.getSnippetList().then(
-								function(response) {
+								function (response) {
 
 										self.snippetList = response;
 
+
+
 								}
-
-
 						)
 
 
-
-
-
-
-
-
-
-				}
-
-
-
+				};
 
 
 

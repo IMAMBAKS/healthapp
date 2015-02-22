@@ -11,7 +11,7 @@ angular.module('myApp')
 		//		query the snippet lists from the database
 				var getSnippetList = function () {
 
-						snippets = deploys.query(collection).then(
+						snippets = deployd.query(collection).then(
 								function (response) {
 										return response.data;
 								}

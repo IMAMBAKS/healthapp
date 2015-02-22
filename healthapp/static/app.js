@@ -24,5 +24,6 @@ angular.module('myApp', ['ui.bootstrap', 'ui.grid', 'ngRoute'])
 		}])*/
 
 		.config(function ($httpProvider) {
+				$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
 				delete $httpProvider.defaults.headers.common['X-Requested-With'];
 		});
