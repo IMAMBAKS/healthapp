@@ -28,6 +28,7 @@
 		<script src="{% static "food_data/services/FoodDataService.js" %}"></script>
 		<script src="{% static "diet/services/UserAndDietService.js" %}"></script>
 		<script src="{% static "food_log/services/FoodLogDataService.js" %}"></script>
+		<script src="{% static "snippets/services/SnippetService.js" %}"></script>
 
 		<!--Controllers-->
 
@@ -37,6 +38,7 @@
 		<script src="{% static "food_log/controllers/FoodLogCtrl.js" %}"></script>
 		<script src="{% static "food_data/controllers/FoodCtrl.js" %}"></script>
 		<script src="{% static "calendar/controllers/CalendarCtrl.js" %}"></script>
+		<script src="{% static "snippets/controllers/SnippetCtrl.js" %}"></script>
 
 
 		<!--Directives-->
@@ -665,8 +667,32 @@
 
 										</div>
 
+										</tab>
 
-								</tab>
+
+										<tab heading="Posting Ajax Data test">
+
+
+												<div class='container-fluid'>
+
+														<form class="form-horizontal">
+
+
+
+																<div class="form-group">
+																		<label>Title</label>
+																		<input type="text" class="form-control" ng-model="foodCtrl.carbs">
+																</div>
+
+																<button type="submit" class="btn btn-default"
+																        ng-click="foodCtrl.addFood()">
+																		Add Food
+																</button>
+														</form>
+												</div>
+
+
+										</tab>
 
 
 						</tabset>
