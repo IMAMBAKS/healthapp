@@ -2,7 +2,7 @@
  * Created by Administrator on 2/22/2015.
  */
 angular.module('myApp')
-		.factory('snippetService', ['deployd', function() {
+		.factory('snippetService', ['deployd', function(deployd) {
 
 
 				var snippets = [];

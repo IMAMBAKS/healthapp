@@ -1,5 +1,5 @@
 angular.module('myApp')
-		.controller('SnippetCtrl', ['snippetService', function () {
+		.controller('SnippetCtrl', ['snippetService', function (snippetService) {
 
 				var self = this;
 
