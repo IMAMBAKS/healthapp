@@ -29,11 +29,4 @@ angular.module('myApp')
 				}
 
 
-
-
-
-
-
-
-
 		}]);
