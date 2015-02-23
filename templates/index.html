@@ -25,7 +25,7 @@
 		<script src="{% static "app.js" %}"></script>
 
 		<!--Services-->
-		<script src="{% static "common/DeploydService.js" %}"></script>
+		<script src="{% static "common/DjangoCRUDService.js" %}"></script>
 		<script src="{% static "diet/services/DietDataService.js" %}"></script>
 		<script src="{% static "diet/services/UserDataService.js" %}"></script>
 		<script src="{% static "food_data/services/FoodDataService.js" %}"></script>
@@ -102,7 +102,7 @@
 
 								<accordion-group ng-init="recent.open = true" is-open="recent.open">
 										<accordion-heading>
-												Calendarö
+												Calendar
 												<i class="pull-right glyphicon"
 												   ng-class="{'glyphicon-chevron-down': recent.open, 'glyphicon-chevron-right': !recent.open}"></i>
 										</accordion-heading>

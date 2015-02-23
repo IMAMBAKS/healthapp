@@ -11,7 +11,7 @@ angular.module('myApp')
 
 
 
-		//		query the snippet lists from the database
+				// query the snippet lists from the database
 				var getSnippetList = function () {
 
 						snippets = deployd.query(collection).then(
@@ -25,7 +25,7 @@ angular.module('myApp')
 
 				};
 
-
+				// create a snippet
 				var createSnippet = function (object) {
 
 						snippet = deployd.createObject(collection, object).then(

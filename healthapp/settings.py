@@ -87,7 +87,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR.child("static")
-print(STATIC_ROOT)
+
+
 
 TEMPLATE_DIRS = (
     BASE_DIR.child('templates'),
@@ -98,4 +99,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     )
 }
-
