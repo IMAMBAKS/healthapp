@@ -4,6 +4,7 @@ angular.module('myApp')
 				var self = this;
 
 				self.snippetList = [];
+				self.snippetTitle = "";
 
 				self.getSnippetList = function () {
 
@@ -14,15 +15,28 @@ angular.module('myApp')
 										self.snippetList = response;
 
 
-
 								}
 						)
 
 
 				};
 
+				self.getSnippetList();
+
+				self.createSnippet = function () {
+						var object;
+						console.log(self.snippetTitle);
+						object = {
+								title: self.snippetTitle
+						};
+
+						snippetService.createSnippet(object).then(function () {
+
+								self.getSnippetList();
+						});
 
 
+				}
 
 
 		}]);

@@ -6,14 +6,16 @@ angular.module('myApp')
 
 
 				var snippets = [];
+				var snippet;
 				var collection = 'snippets';
+
+
 
 		//		query the snippet lists from the database
 				var getSnippetList = function () {
 
 						snippets = deployd.query(collection).then(
 								function (response) {
-										console.log(response.data);
 										return response.data;
 								}
 						);
@@ -24,9 +26,22 @@ angular.module('myApp')
 				};
 
 
+				var createSnippet = function (object) {
+
+						snippet = deployd.createObject(collection, object).then(
+								function (response) {
+										return response.data;
+								}
+						);
+						return snippet;
+
+				};
+
+
 
 				return snippetService = {
-						getSnippetList:  getSnippetList
+						getSnippetList:  getSnippetList,
+						createSnippet: createSnippet
 				}
 
 

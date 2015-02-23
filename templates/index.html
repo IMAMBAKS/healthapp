@@ -683,12 +683,14 @@
 
 														<div class="form-group">
 																<label>Title</label>
-																<input type="text" class="form-control" ng-model="foodCtrl.carbs">
+																<input type="text" class="form-control" ng-model="snippetCtrl.snippetTitle">
 														</div>
 
+														<div ng-bind="snippetCtrl.snippetTitle"></div>
+
 														<button type="submit" class="btn btn-default"
-														        ng-click="foodCtrl.addFood()">
-																Add Food
+														        ng-click="snippetCtrl.createSnippet()">
+																add a snippet title
 														</button>
 												</form>
 										</div>

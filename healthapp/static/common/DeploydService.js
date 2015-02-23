@@ -51,7 +51,7 @@ angular.module('myApp')
 				};
 
 				var createObject = function(collection, object) {
-						var uri = baseUrl + '/' + collection;
+						var uri = baseUrl + '/' + collection + '/';
 						return $http({
 								method: 'POST',
 								url: uri,
