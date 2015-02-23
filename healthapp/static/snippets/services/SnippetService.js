@@ -13,6 +13,7 @@ angular.module('myApp')
 
 						snippets = deployd.query(collection).then(
 								function (response) {
+										console.log(response.data);
 										return response.data;
 								}
 						);
