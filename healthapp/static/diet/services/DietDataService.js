@@ -8,7 +8,7 @@ angular.module('myApp')
 				var collection = 'diet';
 
 
-				//get global diet-Factors
+				// GET global diet-Factors
 				var getDietFactors = function () {
 
 
@@ -26,7 +26,7 @@ angular.module('myApp')
 
 				};
 
-				//edit global diet-Factors
+				// EDIT global diet-Factors
 				var editDietFactors = function (object) {
 
 

@@ -32,7 +32,7 @@ angular.module('myApp')
 				};
 
 				var queryById = function (collection, id) {
-						var uri = baseUrl + '/' + collection + '/' + id;
+						var uri = baseUrl + '/' + collection + '/' + id + '/';
 						return $http({
 								method: 'GET',
 								url: uri
@@ -40,7 +40,7 @@ angular.module('myApp')
 				};
 
 				var updateMultipleObjects = function (collection, object) {
-						var uri = baseUrl + '/' + collection;
+						var uri = baseUrl + '/' + collection + '/';
 						return $http({
 								method: 'POST',
 								url: uri,
@@ -60,7 +60,7 @@ angular.module('myApp')
 				};
 
 				var removeObject = function(collection, id) {
-						var uri = baseUrl + '/' + collection + '/' + id;
+						var uri = baseUrl + '/' + collection + '/' + id + '/';
 						return $http({
 								method: 'DELETE',
 								url: uri
