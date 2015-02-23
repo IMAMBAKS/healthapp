@@ -4,7 +4,7 @@
 angular.module('myApp')
 		.factory('deployd', ['$http', function ($http) {
 
-				var baseUrl = 'http://localhost:8000';
+				var baseUrl = 'http://127.0.0.1:8000';
 
 				var setBaseUrl = function (uri) {
 						baseUrl = uri;
