@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'healthapp',
     'rest_framework',
     'snippets',
+    'user',
 )
 
 MIDDLEWARE_CLASSES = (
