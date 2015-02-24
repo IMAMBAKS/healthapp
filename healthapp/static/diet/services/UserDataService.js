@@ -8,7 +8,7 @@ angular.module('myApp')
 		.factory('userDataService', ['deployd', function (deployd) {
 
 				var userData;
-				var collection = 'users';
+				var collection = 'user';
 
 				// query global user-data from the db
 				var getUserData = function () {
@@ -38,14 +38,7 @@ angular.module('myApp')
 				};
 
 
-				// initialize db
-				var init = function () {
-						userData = [];
-				};
-
-
 				return userDataService = {
-						init: init,
 						getUserData: getUserData,
 						editUserData: editUserData
 				};
