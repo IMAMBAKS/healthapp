@@ -8,8 +8,6 @@ angular.module('myApp')
 
 				self.myData = [];
 				self.gridOptions = [];
-
-
 				self.getFood = function () {
 
 						foodDataService.getFood().then(
