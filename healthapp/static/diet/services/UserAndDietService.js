@@ -14,8 +14,7 @@ angular.module('myApp')
 				var data;
 
 				// combing userDataService and dietDataService
-				//var serviceOutcome = $q.all([userDataService.getUserData(), dietDataService.getDietFactors()]);
-				var serviceOutcome = $q.all([userDataService.getUserData()]);
+				var serviceOutcome = $q.all([userDataService.getUserData(), dietDataService.getDietFactors()]);
 
 				// Calculate application wide values
 				var getData = function () {
@@ -28,7 +27,8 @@ angular.module('myApp')
 										self.userData = d[0][0];
 										self.dietFactors = d[1][0];
 
-											console.log('data = ' + d);
+										console.log(self.userData);
+
 
 										//calculate the lean body mass
 										self.leanBM = self.userData.weight -

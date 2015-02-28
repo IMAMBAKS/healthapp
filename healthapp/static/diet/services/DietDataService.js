@@ -14,6 +14,7 @@ angular.module('myApp')
 
 						dietFactors = deployd.query(collection).then(
 								function (response) {
+										console.log('diet data ='  + response.data);
 
 										return response.data;
 

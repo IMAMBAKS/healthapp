@@ -70,7 +70,7 @@ angular.module('myApp')
 								id: self.userData.id,
 								name: self.userData.name,
 								weight: self.userData.weight,
-								bodyFat: self.userData.bodyFat
+								bodyFat: self.userData.body_fat
 						};
 
 
